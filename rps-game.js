@@ -24,7 +24,10 @@ function getComputerChoice() {
 function playRound(playerSelection, computerSelection) {
     let playerWin = true;
 
-    if(playerSelection === "rock"){
+    if(playerSelection === computerSelection){
+        return `It's a tie! ${playerSelection} is equal to ${computerSelection}`;
+    }
+    else if(playerSelection === "rock"){
         if(computerSelection === "paper")
             playerWin = false;
     } else if(playerSelection === "paper"){
@@ -51,10 +54,14 @@ function game(){
         let computerSelection = getComputerChoice();
         let result = playRound(playerSelection, computerSelection);
         console.log(result);
-        if (result===`You Win! ${playerSelection} beats ${computerSelection}`)
+        if (result===`It's a tie! ${playerSelection} is equal to ${computerSelection}`){
+            gameRound--;
+        } else if (result===`You Win! ${playerSelection} beats ${computerSelection}`) {
             playerScore++;
-        else 
+        } else {
             computerScore++;
+        }
+            
         gameRound++;
     }
 
