@@ -16,8 +16,6 @@ function getComputerChoice() {
         computerChoice = "scissors";
     }
 
-    console.log(randomNumber);
-
     return computerChoice;
 }
 
@@ -61,7 +59,6 @@ function game(){
         } else {
             computerScore++;
         }
-            
         gameRound++;
     }
 
