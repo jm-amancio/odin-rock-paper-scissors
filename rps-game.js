@@ -43,29 +43,44 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
+// Limit the game to 5 rounds regardless if there were tie results: (1) change while conditions and (2) change code executed when tie
+
 function game(){
     let playerScore = 0, computerScore = 0;
     let gameRound = 1;
 
-    while((playerScore < 3 && computerScore < 3) && (gameRound <=5)){
-        let playerSelection = prompt("Rock, paper, or scissors? ").toLowerCase();
-        let computerSelection = getComputerChoice();
+    while((gameRound <=5) && (playerScore < 3 && computerScore < 3)){
+        let playerSelection, computerSelection;
+        
+        let invalidInput = true;
+        while(invalidInput) {
+            playerSelection = prompt("Rock, paper, or scissors? ").toLowerCase();
+            if (playerSelection === "rock" || playerSelection === "paper" || playerSelection === "scissors") {
+                invalidInput = false;
+                break;
+            }
+            console.log("Invalid Input. Try again.");
+        }
+
+        computerSelection = getComputerChoice();
+
         let result = playRound(playerSelection, computerSelection);
         console.log(result);
-        if (result===`It's a tie! ${playerSelection} is equal to ${computerSelection}`){
-            gameRound--;
-        } else if (result===`You Win! ${playerSelection} beats ${computerSelection}`) {
+        if (result===`You Win! ${playerSelection} beats ${computerSelection}`) {
             playerScore++;
-        } else {
+        } else if (result===`You Lose! ${computerSelection} beats ${playerSelection}`) {
             computerScore++;
-        }
+        } else { // if (result===`It's a tie! ${playerSelection} is equal to ${computerSelection}`)
+            // do nothing
+        } 
         gameRound++;
     }
 
-    if(playerScore > computerScore) 
-        console.log(`[Score: ${playerScore}] You won against a computer. Congrats!`);
-    else 
-        console.log(`[Score: ${playerScore}] You failed against a computer. Try Again!`);
+    if(playerScore > computerScore) {
+        console.log(`[Score: ${playerScore} vs ${computerScore}] You won against a computer. Congrats!`);
+    } else {
+        console.log(`[Score: ${playerScore} vs ${computerScore}] You failed against a computer. Try Again!`);
+    }
 
 }
 
