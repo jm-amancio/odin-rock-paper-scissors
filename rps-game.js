@@ -1,87 +1,69 @@
-// ROCK-PAPER-SCISSORS GAME
+let playerScore, holoScore, gameRound;
+const choices = ["rock", "paper", "scissors"];
 
-function getComputerChoice() {
-    let computerChoice;
+function startGame(){
+    let begin = false;
+    begin = confirm("Holo is challenging you to a duel. Would you like to accept the duel?");
+    while (!begin) 
+        begin = confirm("You cannot decline. Press 'OK'.");
+    playerScore = 0, holoScore = 0, gameRound = 1;
+}
 
+// function getPlayerChoice
+for(let i=0; i<choices.length; i++){
+    document.getElementById(`player-${choices[i]}`).addEventListener('click', (e) => {
+        // proceed to play
+        playRound(e.target.value);
+
+    });
+}
+
+function getHoloChoice() {
     let randomNumber = Math.floor(Math.random() * 10);
     while (randomNumber === 0 || randomNumber > 3) {
         randomNumber = Math.floor(Math.random() * 10);
     }
-
-    if(randomNumber === 1){
-        computerChoice = "rock";
-    } else if(randomNumber === 2){
-        computerChoice = "paper";
-    } else { // (randomNumber === 3)
-        computerChoice = "scissors";
-    }
-
-    return computerChoice;
+    return choices[randomNumber - 1];
 }
 
-function playRound(playerSelection, computerSelection) {
+function playRound(playerSelection) {
+    document.getElementById('round-count').innerHTML = `${gameRound}`
+    // value of button with id=`player-${choices[i]}`
+    playerSelection = playerSelection.toLowerCase();
+    let holoSelection = getHoloChoice();
+
     let playerWin = true;
-
-    if(playerSelection === computerSelection){
-        return `It's a tie! ${playerSelection} is equal to ${computerSelection}`;
-    }
-    else if(playerSelection === "rock"){
-        if(computerSelection === "paper")
-            playerWin = false;
-    } else if(playerSelection === "paper"){
-        if(computerSelection === "scissors")
-            playerWin = false;
-    } else if(playerSelection === "scissors"){
-        if(computerSelection === "rock")
-            playerWin = false;
-    }
-
-    if(playerWin === true){
-        return `You Win! ${playerSelection} beats ${computerSelection}`;
+    if (playerSelection === holoSelection){
+        showRoundResult(playerSelection, holoSelection, `It's a tie! \n${playerSelection} equals ${holoSelection}`);
+    } else if((playerSelection === "rock" && holoSelection === "paper") ||
+        (playerSelection === "paper" && holoSelection === "scissors")   || 
+        (playerSelection === "scissors" && holoSelection === "rock")) {
+        showRoundResult(playerSelection, holoSelection, `You Lose! \n${playerSelection} is beaten by ${holoSelection}`);
     } else {
-        return `You Lose! ${computerSelection} beats ${playerSelection}`;
+        showRoundResult(playerSelection, holoSelection, `You Win! \n${playerSelection} beats ${holoSelection}`);
     }
 }
 
-// Limit the game to 5 rounds regardless if there were tie results: (1) change while conditions and (2) change code executed when tie
+function showRoundResult(playerSelection, holoSelection, result){
+    if (result===`You Win! \n${playerSelection} beats ${holoSelection}`) {
+        ++playerScore;
+    } else if (result===`You Lose! \n${playerSelection} is beaten by ${holoSelection}`) {
+        ++holoScore;
+    } 
+    gameRound++;
 
-function game(){
-    let playerScore = 0, computerScore = 0;
-    let gameRound = 1;
-
-    while((gameRound <=5) && (playerScore < 3 && computerScore < 3)){
-        let playerSelection, computerSelection;
-        
-        let invalidInput = true;
-        while(invalidInput) {
-            playerSelection = prompt("Rock, paper, or scissors? ").toLowerCase();
-            if (playerSelection === "rock" || playerSelection === "paper" || playerSelection === "scissors") {
-                invalidInput = false;
-                break;
-            }
-            console.log("Invalid Input. Try again.");
+    document.getElementById('round-result-announcement').textContent = result;
+    document.getElementById('round-result-score').textContent = `${playerScore} - ${holoScore}`;
+    document.getElementById('player-score-board').textContent = `${playerScore}`;
+    document.getElementById('holo-score-board').textContent = `${holoScore}`;
+    
+    if(playerScore === 5 || holoScore === 5){
+        if(playerScore > holoScore) {
+            document.getElementById('status').innerHTML = `<h3>[${playerScore}-${holoScore}] You won against Holo. Congrats!</h3>`;
+        } else {
+            document.getElementById('status').innerHTML = `<h3>[${playerScore}-${holoScore}] You failed against Holo. Try Again!</h3>`;
         }
-
-        computerSelection = getComputerChoice();
-
-        let result = playRound(playerSelection, computerSelection);
-        console.log(result);
-        if (result===`You Win! ${playerSelection} beats ${computerSelection}`) {
-            playerScore++;
-        } else if (result===`You Lose! ${computerSelection} beats ${playerSelection}`) {
-            computerScore++;
-        } else { // if (result===`It's a tie! ${playerSelection} is equal to ${computerSelection}`)
-            // do nothing
-        } 
-        gameRound++;
     }
-
-    if(playerScore > computerScore) {
-        console.log(`[Score: ${playerScore} vs ${computerScore}] You won against a computer. Congrats!`);
-    } else {
-        console.log(`[Score: ${playerScore} vs ${computerScore}] You failed against a computer. Try Again!`);
-    }
-
 }
 
-game();
+startGame();

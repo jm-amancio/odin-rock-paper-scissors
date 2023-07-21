@@ -1,17 +1,55 @@
 <!DOCTYPE html>
-
 <html lang="en">
     <head>
         <meta charset ="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Rock Paper Scissors</title>
-        <!-- For CSS
-            <link rel="stylesheet" href="./style.css">
-        -->
-        <script type ="text/javascript" src="rps-game.js"></script>
+        <link rel="stylesheet" href="./style.css">
+        <script type ="text/javascript" src="rps-game.js" defer></script>
+        <title>Rock-Paper-Scissors</title>
     </head>
     <body>
-        <p> This is yet to be filled. </p>
+        <header id="main-header">
+            <div class="text-container">
+                <h1>Rock-Paper-Scissors Game</h1>
+                <h2>Play against Spice and Wolf's Holo</h2>
+            </div>
+        </header>
+        <div id="main-content">
+            <div class="text-container">
+                <div id="status-player" class="card">
+                    <h3>You</h3>
+                    <img class="icon" src="https://cdn-icons-png.flaticon.com/512/847/847970.png?w=740&t=st=1689853671~exp=1689854271~hmac=3367ea78954eb1df8bf41750f281228683e8345750dc0a005556c506c5b85d6a">
+                    <div class="player-choices" class="board-container">
+                        <button id="player-rock" class="image-button" value="rock">Rock</button>
+                        <button id="player-paper" class="image-button" value="paper">Paper</button>
+                        <button id="player-scissors" class="image-button" value="scissors">Scissors</button>
+                    </div>
+                    <div>Score: <span id="player-score-board">0</span></div>
+                </div>
+                <div id="status" class="card">
+                    <h3>Round <span id="round-count">1</span></h3>
+                    <h3 id="round-result-announcement"> </h3>
+                    <h3 id="round-result-score">0 - 0</h3>
+                </div>
+                <div id="status-holo" class="card">
+                    <h3>Holo</h3>
+                    <img class="icon" src="https://www.seekpng.com/png/detail/305-3054051_wallpapers-id-holo-spice-and-wolf-cloak.png" alt="Wallpapers Id - - Holo Spice And Wolf Cloak@seekpng.com">
+                    <div class="holo-choices" class="board-container">
+                        <button id="holo-rock" class="image-button" value="rock">Rock</button>
+                        <button id="holo-paper" class="image-button" value="paper">Paper</button>
+                        <button id="holo-scissors" class="image-button" value="paper">Scissors</button>
+                    </div>
+                    <div>Score: <span id="holo-score-board">0</span></div>
+                </div>
+            </div>
+        </div>
+        <div id="main-footer">
+            <div class="text-container">
+                Photo Credits: 
+                <a href="https://www.seekpng.com/ipng/u2w7i1o0q8q8y3i1_wallpapers-id-holo-spice-and-wolf-cloak/" target="_blank">Wallpapers Id - - Holo Spice And Wolf Cloak @seekpng.com</a>
+                <a href="https://www.freepik.com/free-icon/user_15012967.htm" target="_blank">Freepik - - Default Avatar @freepik.com</a>
+            </div>
+        </div>
     </body>
 </html>
